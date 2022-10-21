@@ -20,14 +20,6 @@ public class QueueRepository extends MessageRepository {
 	private static final String SELECT = "SELECT id, queue, payload, created_at, consumed_by FROM " + TABLE + " WHERE queue = ? AND consumed_by = ? LIMIT 1";
 	private static final String DELETE = "DELETE FROM " + TABLE + " WHERE id = ?"; 
 
-	private DataSourceTransactionManager transactionManager;
-	private JdbcTemplate jdbcTemplate;
-
-	public QueueRepository() {
-		this.jdbcTemplate = new JdbcTemplate(DbDataSource.getDataSource());
-		transactionManager = new DataSourceTransactionManager(DbDataSource.getDataSource());
-	}
-
 	public void set(Message message) {
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{message.getQueue(), message.getPayload(), message.getCreatedAt()},

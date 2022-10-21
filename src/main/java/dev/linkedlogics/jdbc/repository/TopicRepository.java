@@ -30,14 +30,6 @@ public class TopicRepository extends MessageRepository {
 	private static final String DELETE = "DELETE FROM "+ TABLE + " WHERE created_at < ?";
 	private static final String DELETE_CONSUMED = "DELETE FROM "+ TABLE + "_consumed WHERE created_at < ?";
 
-	private DataSourceTransactionManager transactionManager;
-	private JdbcTemplate jdbcTemplate;
-
-	public TopicRepository() {
-		this.jdbcTemplate = new JdbcTemplate(DbDataSource.getDataSource());
-		transactionManager = new DataSourceTransactionManager(DbDataSource.getDataSource());
-	}
-
 	public void set(Message message) {
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{message.getQueue(), message.getPayload(), message.getCreatedAt()},

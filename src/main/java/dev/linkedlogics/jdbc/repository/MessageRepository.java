@@ -8,13 +8,24 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import dev.linkedlogics.jdbc.entity.Message;
+import dev.linkedlogics.jdbc.service.DbDataSource;
 
 public abstract class MessageRepository {
+	protected DataSourceTransactionManager transactionManager;
+	protected JdbcTemplate jdbcTemplate;
+	
+	public MessageRepository() {
+		this.jdbcTemplate = new JdbcTemplate(DbDataSource.getDataSource());
+		this.transactionManager = new DataSourceTransactionManager(DbDataSource.getDataSource());
+	}
+	
 	public abstract void set(Message message);
 
 	public abstract Optional<Message> get(String queue, String consumer);
