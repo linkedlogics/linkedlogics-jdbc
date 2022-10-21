@@ -1,0 +1,7 @@
+linkedlogics:
+  application:
+    name: test
+  datasource:
+    url: "jdbc:h2:mem:sample;INIT=RUNSCRIPT FROM 'classpath:create.sql';"
+    username: sa
+    password: password

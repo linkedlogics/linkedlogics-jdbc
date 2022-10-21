@@ -15,6 +15,7 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
@@ -32,14 +33,10 @@ jacoco {
 }
 
 dependencies {
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3'
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.3'
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
-	implementation 'org.springframework:spring-expression:5.3.22'
-	implementation 'org.springframework:spring-context:5.3.22'	
-	implementation 'org.slf4j:slf4j-api:1.7.36'	
-	implementation 'org.slf4j:slf4j-simple:1.7.36'
+	implementation 'dev.linkedlogics:linkedlogics:1.0.0-SNAPSHOT'
+	implementation 'org.springframework:spring-jdbc:5.3.22'
+	implementation 'org.jooq:jooq:3.17.2'
+	implementation 'com.zaxxer:HikariCP:4.0.3'
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
@@ -47,6 +44,7 @@ dependencies {
 	testImplementation 'org.assertj:assertj-core:3.22.0'
 	testImplementation 'org.mockito:mockito-core:4.8.0'
 	testImplementation 'org.mockito:mockito-junit-jupiter:4.8.0'
+	implementation 'com.h2database:h2:2.1.214'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
@@ -60,7 +58,7 @@ publishing {
             from components.java
         
             pom {
-                name = 'LinkedLogics'
+                name = 'LinkedLogics JDBC'
                 description = 'Linked-Logics Framework'
                 url = 'http://www.linkedlogics.dev'
                 licenses {
@@ -77,8 +75,8 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://inkedlogics/linkedlogics.git'
-                    developerConnection = 'scm:git:ssh://inkedlogics/linkedlogics.git'
+                    connection = 'scm:git:git://linkedlogics/linkedlogics-jdbc.git'
+                    developerConnection = 'scm:git:ssh://linkedlogics/linkedlogics-jdbc.git'
                     url = 'http://www.linkedlogics.dev'
                 }
             }
