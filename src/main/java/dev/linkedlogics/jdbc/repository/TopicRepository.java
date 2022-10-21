@@ -19,7 +19,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.jdbc.service.DbDataSource;
 
-public class TopicRepository {
+public class TopicRepository extends MessageRepository {
 	private static final String TABLE = "ll_topic";
 	
 	private static final String INSERT = "INSERT INTO " + TABLE + " (queue, payload, created_at) VALUES(?, ?, ?)";
@@ -79,25 +79,5 @@ public class TopicRepository {
 			transactionManager.rollback(txStatus);
 		}
 		return Optional.empty();
-	}
-
-	private DefaultTransactionDefinition getTransactionDefinition() {
-		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-		definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
-		definition.setTimeout(3);
-		return definition;
-	}
-
-	private static class MessageRowMapper implements RowMapper<Message> {
-		@Override
-		public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Message message = new Message();
-			message.setId(rs.getLong(1));
-			message.setQueue(rs.getString(2));
-			message.setPayload(rs.getString(3));
-			message.setCreatedAt(OffsetDateTime.ofInstant(Instant.ofEpochMilli(rs.getTimestamp(4).getTime()), ZoneId.of("UTC")));
-			message.setConsumedBy(rs.getString(5));
-			return message;
-		}
 	}
 }
