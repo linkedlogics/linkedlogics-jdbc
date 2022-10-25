@@ -15,15 +15,15 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import dev.linkedlogics.jdbc.entity.Message;
-import dev.linkedlogics.jdbc.service.DbDataSource;
+import dev.linkedlogics.jdbc.service.JdbcDataSource;
 
 public abstract class MessageRepository {
 	protected DataSourceTransactionManager transactionManager;
 	protected JdbcTemplate jdbcTemplate;
 	
 	public MessageRepository() {
-		this.jdbcTemplate = new JdbcTemplate(DbDataSource.getDataSource());
-		this.transactionManager = new DataSourceTransactionManager(DbDataSource.getDataSource());
+		this.jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
+		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
 	}
 	
 	public abstract void set(Message message);

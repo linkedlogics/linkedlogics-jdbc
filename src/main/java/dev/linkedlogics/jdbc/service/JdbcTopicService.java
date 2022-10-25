@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.jdbc.repository.TopicRepository;
 
-public class DbTopicService implements TopicService {
+public class JdbcTopicService implements TopicService {
 	private String consumerId = UUID.randomUUID().toString();
 	private TopicRepository repository;
 	private ScheduledExecutorService executor;
@@ -31,7 +31,7 @@ public class DbTopicService implements TopicService {
 		executor.shutdownNow();
 	}
 
-	public DbTopicService() {
+	public JdbcTopicService() {
 		this.repository = new TopicRepository();
 	}
 	

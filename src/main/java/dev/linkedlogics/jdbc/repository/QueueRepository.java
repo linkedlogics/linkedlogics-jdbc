@@ -9,7 +9,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 import dev.linkedlogics.jdbc.entity.Message;
-import dev.linkedlogics.jdbc.service.DbDataSource;
+import dev.linkedlogics.jdbc.service.JdbcDataSource;
 
 public class QueueRepository extends MessageRepository {
 	private static final String TABLE = "ll_queue";

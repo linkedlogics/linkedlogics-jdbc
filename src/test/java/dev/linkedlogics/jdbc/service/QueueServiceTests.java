@@ -16,7 +16,7 @@ public class QueueServiceTests {
 	
 	@BeforeAll
 	public static void setUp() {
-		LinkedLogics.configure(new DbServiceConfigurer());
+		LinkedLogics.configure(new JdbcServiceConfigurer());
 	}
 	
 	@Test

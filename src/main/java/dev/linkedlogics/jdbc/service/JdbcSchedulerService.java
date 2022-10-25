@@ -1,5 +1,5 @@
 package dev.linkedlogics.jdbc.service;
 
-public class DbContextService {
+public class JdbcSchedulerService {
 
 }

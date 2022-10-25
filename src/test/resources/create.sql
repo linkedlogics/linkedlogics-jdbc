@@ -23,3 +23,20 @@ CREATE TABLE ll_topic_consumed (
     consumed_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id, consumed_by)
 );
+
+CREATE TABLE ll_context (
+    id VARCHAR(128) NOT NULL,
+    id_key VARCHAR(128),
+    parent_id VARCHAR(128),
+    status VARCHAR(32) NOT NULL,
+    version INTEGER NOT NULL,
+    process_id VARCHAR(128) NOT NULL,
+    process_version INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
+    finished_at TIMESTAMP,
+    expired_at TIMESTAMP,
+    data VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+

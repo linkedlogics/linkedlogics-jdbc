@@ -11,7 +11,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import dev.linkedlogics.config.LinkedLogicsConfiguration;
 
-public class DbDataSource {
+public class JdbcDataSource {
 	public static final String DB = "datasource";
 
     private static HikariConfig config = new HikariConfig();
@@ -34,7 +34,7 @@ public class DbDataSource {
         ds = new HikariDataSource(config);
     }
 
-    private DbDataSource() {
+    private JdbcDataSource() {
     	
     }
 

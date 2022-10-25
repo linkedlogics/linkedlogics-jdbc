@@ -2,14 +2,20 @@ package dev.linkedlogics.jdbc.service;
 
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.linkedlogics.LinkedLogics;
 import dev.linkedlogics.context.LogicContext;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.service.ConsumerService;
 import dev.linkedlogics.service.ServiceLocator;
 import dev.linkedlogics.service.task.ProcessorTask;
+import lombok.extern.slf4j.Slf4j;
 
-public class DbConsumerService implements ConsumerService, Runnable {
+@Slf4j
+public class JdbcConsumerService implements ConsumerService, Runnable {
 	private Thread consumer;
 	private boolean isRunning;
 	
@@ -37,7 +43,12 @@ public class DbConsumerService implements ConsumerService, Runnable {
 				Optional<Message> message = queueService.poll(LinkedLogics.getApplicationName());
 				
 				if (message.isPresent()) {
-					consume(ServiceLocator.getInstance().getMapperService().mapFrom(message.get().getPayload(), LogicContext.class));
+					ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
+					try {
+						consume(mapper.readValue(message.get().getPayload(), LogicContext.class));
+					} catch (Exception e) {
+						log.error(e.getLocalizedMessage(), e);
+					}
 				} else {
 					Thread.sleep(1);
 				}

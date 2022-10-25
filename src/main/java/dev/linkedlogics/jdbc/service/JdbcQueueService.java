@@ -7,10 +7,10 @@ import dev.linkedlogics.LinkedLogics;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.jdbc.repository.QueueRepository;
 
-public class DbQueueService implements QueueService {
+public class JdbcQueueService implements QueueService {
 	private QueueRepository repository;
 	
-	public DbQueueService() {
+	public JdbcQueueService() {
 		this.repository = new QueueRepository();
 	}
 	

@@ -19,14 +19,14 @@ import dev.linkedlogics.annotation.Logic;
 import dev.linkedlogics.context.Context;
 import dev.linkedlogics.context.ContextError;
 import dev.linkedlogics.context.Status;
-import dev.linkedlogics.jdbc.service.DbServiceConfigurer;
+import dev.linkedlogics.jdbc.service.JdbcServiceConfigurer;
 import dev.linkedlogics.model.process.ProcessDefinition;
 
 public class SimpleProcess1Tests {
 	
 	@BeforeAll
 	public static void setUp() {
-		LinkedLogics.configure(new DbServiceConfigurer());
+		LinkedLogics.configure(new JdbcServiceConfigurer());
 		LinkedLogics.registerLogic(SimpleProcess1Tests.class);
 		LinkedLogics.registerProcess(SimpleProcess1Tests.class);
 	}

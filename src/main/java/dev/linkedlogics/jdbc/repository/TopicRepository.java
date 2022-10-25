@@ -17,7 +17,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import dev.linkedlogics.jdbc.entity.Message;
-import dev.linkedlogics.jdbc.service.DbDataSource;
+import dev.linkedlogics.jdbc.service.JdbcDataSource;
 
 public class TopicRepository extends MessageRepository {
 	private static final String TABLE = "ll_topic";
