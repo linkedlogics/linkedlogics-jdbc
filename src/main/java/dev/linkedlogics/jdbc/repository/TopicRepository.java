@@ -64,7 +64,6 @@ public class TopicRepository extends MessageRepository {
 			int result = jdbcTemplate.update(DELETE, new Object[] {expiredAt});
 			jdbcTemplate.update(DELETE_CONSUMED, new Object[] {expiredAt});
 			transactionManager.commit(txStatus);
-			System.out.println("CLEARED = " + result);
 			return Optional.ofNullable(message);
 		} catch (Exception e) {
 			e.printStackTrace();

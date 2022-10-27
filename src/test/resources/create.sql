@@ -39,4 +39,3 @@ CREATE TABLE ll_context (
     data VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
-

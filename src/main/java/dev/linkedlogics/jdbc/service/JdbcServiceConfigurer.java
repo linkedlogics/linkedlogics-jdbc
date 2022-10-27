@@ -9,5 +9,6 @@ public class JdbcServiceConfigurer extends ServiceConfigurer {
 		configure(new JdbcTopicService());
 		configure(new JdbcConsumerService());
 		configure(new JdbcPublisherService());
+		configure(new JdbcSchedulerService());
 	}
 }
