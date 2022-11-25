@@ -55,7 +55,7 @@ public class RetryProcess1Tests {
 
 	@Test
 	public void testScenario1() {
-		String contextId = LinkedLogics.start("SIMPLE_SCENARIO_1", new HashMap<>() {{ put("list", new ArrayList<>());}});
+		String contextId = LinkedLogics.start("RETRY_SCENARIO_1", new HashMap<>() {{ put("list", new ArrayList<>());}});
 		assertThat(waitUntil(contextId, Status.FAILED, 12000)).isTrue();
 
 		Context ctx = contextService.get(contextId).get();
@@ -67,7 +67,7 @@ public class RetryProcess1Tests {
 
 	@ProcessChain
 	public static ProcessDefinition scenario1() {
-		return createProcess("SIMPLE_SCENARIO_1", 0)
+		return createProcess("RETRY_SCENARIO_1", 0)
 				.add(logic("INSERT").application("test").input("list", expr("list")).input("val", 1).retry(3, 1).build())
 				.add(logic("INSERT").application("test").input("list", expr("list")).input("val", 2).build())
 				.build();
@@ -75,7 +75,7 @@ public class RetryProcess1Tests {
 
 	@Test
 	public void testScenario2() {
-		String contextId = LinkedLogics.start("SIMPLE_SCENARIO_2", new HashMap<>() {{ put("list", new ArrayList<>());}});
+		String contextId = LinkedLogics.start("RETRY_SCENARIO_2", new HashMap<>() {{ put("list", new ArrayList<>());}});
 		assertThat(waitUntil(contextId, Status.FINISHED, 12000)).isTrue();
 
 		Context ctx = contextService.get(contextId).get();
@@ -89,7 +89,7 @@ public class RetryProcess1Tests {
 
 	@ProcessChain
 	public static ProcessDefinition scenario2() {
-		return createProcess("SIMPLE_SCENARIO_2", 0)
+		return createProcess("RETRY_SCENARIO_2", 0)
 				.add(logic("INSERT_SAFE").application("test").input("list", expr("list")).input("val", 1).retry(3, 1).build())
 				.add(logic("INSERT").application("test").input("list", expr("list")).input("val", 2).build())
 				.build();
@@ -97,7 +97,7 @@ public class RetryProcess1Tests {
 
 	@Test
 	public void testScenario3() {
-		String contextId = LinkedLogics.start("SIMPLE_SCENARIO_3", new HashMap<>() {{ put("list", new ArrayList<>());}});
+		String contextId = LinkedLogics.start("RETRY_SCENARIO_3", new HashMap<>() {{ put("list", new ArrayList<>());}});
 		assertThat(waitUntil(contextId, Status.FAILED, 12000)).isTrue();
 
 		Context ctx = contextService.get(contextId).get();
@@ -109,7 +109,7 @@ public class RetryProcess1Tests {
 
 	@ProcessChain
 	public static ProcessDefinition scenario3() {
-		return createProcess("SIMPLE_SCENARIO_3", 0)
+		return createProcess("RETRY_SCENARIO_3", 0)
 				.add(group(logic("INSERT").application("test").input("list", expr("list")).input("val", 2).build(),
 						logic("INSERT").application("test").input("list", expr("list")).input("val", 1).build())
 						.retry(3, 1)

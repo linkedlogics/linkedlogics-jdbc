@@ -4,13 +4,12 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 import dev.linkedlogics.jdbc.entity.Message;
-import dev.linkedlogics.jdbc.service.JdbcDataSource;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class QueueRepository extends MessageRepository {
 	private static final String TABLE = "ll_queue";
 	
@@ -44,7 +43,7 @@ public class QueueRepository extends MessageRepository {
 			transactionManager.commit(txStatus);
 			return Optional.ofNullable(message);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getLocalizedMessage(), e);
 			transactionManager.rollback(txStatus);
 		}
 		return Optional.empty();

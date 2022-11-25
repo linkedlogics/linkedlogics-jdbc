@@ -39,3 +39,13 @@ CREATE TABLE ll_context (
     data VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE ll_trigger (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    context_id VARCHAR(128) NOT NULL,
+    waiting_context_id VARCHAR(128) NOT NULL,
+    waiting_position VARCHAR(256) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    expired_at TIMESTAMP,
+    PRIMARY KEY (id)
+);
