@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import dev.linkedlogics.LinkedLogics;
 import dev.linkedlogics.annotation.Input;
 import dev.linkedlogics.annotation.Logic;
-import dev.linkedlogics.annotation.ProcessChain;
 import dev.linkedlogics.context.Status;
 import dev.linkedlogics.jdbc.service.JdbcServiceConfigurer;
 import dev.linkedlogics.model.process.ProcessDefinition;
@@ -52,8 +51,6 @@ public class ForkJoinProcess1Tests {
 		});
 	}
 	
-	
-	@ProcessChain
 	public static ProcessDefinition scenario1() {
 		return createProcess("FORKJOIN_SCENARIO_1", 0)
 				.add(logic("CREATE").application("test")
@@ -90,8 +87,6 @@ public class ForkJoinProcess1Tests {
 		});
 	}
 	
-	
-	@ProcessChain
 	public static ProcessDefinition scenario2() {
 		return createProcess("FORKJOIN_SCENARIO_2", 0)
 				.add(logic("CREATE").application("test").input("key", "key1").input("value", "v1").input("delayed", 1000L).fork("F1").build())
@@ -128,8 +123,6 @@ public class ForkJoinProcess1Tests {
 		});
 	}
 	
-	
-	@ProcessChain
 	public static ProcessDefinition scenario3() {
 		return createProcess("FORKJOIN_SCENARIO_3", 0)
 				.add(logic("CREATE").application("test")

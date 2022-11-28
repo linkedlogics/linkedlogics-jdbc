@@ -35,7 +35,7 @@ CREATE TABLE ll_context (
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     finished_at TIMESTAMP,
-    expired_at TIMESTAMP,
+    expires_at TIMESTAMP,
     data VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );

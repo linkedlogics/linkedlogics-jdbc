@@ -2,12 +2,10 @@ package dev.linkedlogics.jdbc.service;
 
 import java.util.Optional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.linkedlogics.LinkedLogics;
-import dev.linkedlogics.context.LogicContext;
+import dev.linkedlogics.context.Context;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.service.ConsumerService;
 import dev.linkedlogics.service.ServiceLocator;
@@ -45,7 +43,7 @@ public class JdbcConsumerService implements ConsumerService, Runnable {
 				if (message.isPresent()) {
 					ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
 					try {
-						consume(mapper.readValue(message.get().getPayload(), LogicContext.class));
+						consume(mapper.readValue(message.get().getPayload(), Context.class));
 					} catch (Exception e) {
 						log.error(e.getLocalizedMessage(), e);
 					}
@@ -58,7 +56,7 @@ public class JdbcConsumerService implements ConsumerService, Runnable {
 	}
 
 	@Override
-	public void consume(LogicContext context) {
+	public void consume(Context context) {
 		ServiceLocator.getInstance().getProcessorService().process(new ProcessorTask(context));
 	}
 }

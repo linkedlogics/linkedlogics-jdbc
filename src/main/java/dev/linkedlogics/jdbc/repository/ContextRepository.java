@@ -22,10 +22,10 @@ public class ContextRepository {
 	public static final String TABLE = "ll_context";
 
 	private static final String INSERT = "INSERT INTO " + TABLE + " (id, id_key, parent_id, status, version, process_id, "
-			+ "process_version, created_at, updated_at, finished_at, expired_at, data) "
+			+ "process_version, created_at, updated_at, finished_at, expires_at, data) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	private static final String UPDATE = "UPDATE " + TABLE + " SET status = ?, version = ?, updated_at = ?, finished_at = ?, expired_at = ?, data = ? where id = ? and version = ?";
+	private static final String UPDATE = "UPDATE " + TABLE + " SET status = ?, version = ?, updated_at = ?, finished_at = ?, expires_at = ?, data = ? where id = ? and version = ?";
 	private static final String SELECT = "SELECT data, version FROM " + TABLE + " WHERE id = ?";
 	private static final String DELETE = "DELETE FROM " + TABLE + " WHERE id = ? and version = ?";
 
@@ -42,7 +42,7 @@ public class ContextRepository {
 
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{context.getId(), context.getKey(), context.getParentId(), context.getStatus().name(), context.getVersion(), context.getProcessId(),
-						context.getProcessVersion(), context.getCreatedAt(), context.getUpdatedAt(), context.getFinishedAt(), context.getExpiredAt(),
+						context.getProcessVersion(), context.getCreatedAt(), context.getUpdatedAt(), context.getFinishedAt(), context.getExpiresAt(),
 						mapper.writeValueAsString(context)},
 				new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR,
 						Types.INTEGER, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP,
@@ -56,7 +56,7 @@ public class ContextRepository {
 		ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
 		
 		int result = jdbcTemplate.update(UPDATE, 
-				new Object[]{context.getStatus().name(), context.getVersion() + 1, context.getUpdatedAt(), context.getFinishedAt(), context.getExpiredAt(),
+				new Object[]{context.getStatus().name(), context.getVersion() + 1, context.getUpdatedAt(), context.getFinishedAt(), context.getExpiresAt(),
 						mapper.writeValueAsString(context), context.getId(), context.getVersion()},
 				new int[]{Types.VARCHAR, Types.INTEGER, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP,
 						Types.LONGVARCHAR, Types.VARCHAR, Types.INTEGER,});
