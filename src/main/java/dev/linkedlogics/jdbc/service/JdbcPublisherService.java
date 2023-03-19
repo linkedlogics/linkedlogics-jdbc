@@ -14,7 +14,7 @@ public class JdbcPublisherService implements PublisherService {
 
 	@Override
 	public void publish(Context context) {
-		QueueService queueService = ServiceLocator.getInstance().getService(QueueService.class);
+		QueueService queueService = ServiceLocator.getInstance().getQueueService();
 		ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
 		try {
 			queueService.offer(context.getApplication(), mapper.writeValueAsString(context));

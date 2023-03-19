@@ -38,7 +38,7 @@ public class JdbcConsumerService implements ConsumerService, Runnable {
 		
 		while (isRunning) {
 			try {
-				QueueService queueService = ServiceLocator.getInstance().getService(QueueService.class);
+				QueueService queueService = ServiceLocator.getInstance().getQueueService();
 				Optional<String> message = queueService.poll(LinkedLogics.getApplicationName());
 				
 				if (message.isPresent()) {
