@@ -1,6 +1,7 @@
 package dev.linkedlogics.jdbc.repository;
 
 import java.sql.Types;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,16 +20,16 @@ public class QueueRepository extends MessageRepository {
 	private static final String SELECT = "SELECT id, queue, payload, created_at, consumed_by FROM " + TABLE + " WHERE queue = ? AND consumed_by = ? LIMIT 1";
 	private static final String DELETE = "DELETE FROM " + TABLE + " WHERE id = ?"; 
 
-	public void set(Message message) {
+	public void set(String queue, String payload) {
 		int result = jdbcTemplate.update(INSERT, 
-				new Object[]{message.getQueue(), message.getPayload(), message.getCreatedAt()},
+				new Object[]{queue, payload, OffsetDateTime.now()},
 				new int[]{Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP});
 		if (result == 0) {
 			throw new RuntimeException();
 		}
 	}
 
-	public Optional<Message> get(String queue, String consumer) {
+	public Optional<String> get(String queue, String consumer) {
 		Message message = null;
 		TransactionStatus txStatus = transactionManager.getTransaction(getTransactionDefinition());
 		try {
@@ -41,7 +42,7 @@ public class QueueRepository extends MessageRepository {
 				}
 			}
 			transactionManager.commit(txStatus);
-			return Optional.ofNullable(message);
+			return Optional.ofNullable(message == null ? null : message.getPayload());
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 			transactionManager.rollback(txStatus);

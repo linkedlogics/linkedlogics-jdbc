@@ -26,9 +26,9 @@ public abstract class MessageRepository {
 		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
 	}
 	
-	public abstract void set(Message message);
+	public abstract void set(String queue, String payload);
 
-	public abstract Optional<Message> get(String queue, String consumer);
+	public abstract Optional<String> get(String queue, String consumer);
 	
 	protected DefaultTransactionDefinition getTransactionDefinition() {
 		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();

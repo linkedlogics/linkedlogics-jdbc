@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.service.MapperService;
+import dev.linkedlogics.service.QueueService;
 import dev.linkedlogics.service.SchedulerService;
 import dev.linkedlogics.service.ServiceLocator;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,6 @@ public class JdbcSchedulerService implements SchedulerService, Runnable {
 	private Thread consumer;
 	private ArrayBlockingQueue<String> queueQueue;
 	private boolean isRunning;
-	
 	
 	@Override
 	public void start() {
@@ -63,11 +63,11 @@ public class JdbcSchedulerService implements SchedulerService, Runnable {
 			if (queue != null) {
 				QueueService queueService = ServiceLocator.getInstance().getService(QueueService.class);
 				MapperService mapperService = ServiceLocator.getInstance().getMapperService();
-				Optional<Message> scheduleMessage = queueService.poll(queue);
+				Optional<String> scheduleMessage = queueService.poll(queue);
 
 				while (scheduleMessage.isPresent()) {
 					try {
-						Schedule schedule = mapperService.getMapper().readValue(scheduleMessage.get().getPayload(), Schedule.class);
+						Schedule schedule = mapperService.getMapper().readValue(scheduleMessage.get(), Schedule.class);
 
 						if (schedule.getExpiresAt().withNano(0).isBefore(OffsetDateTime.now())) {
 							handle(schedule);

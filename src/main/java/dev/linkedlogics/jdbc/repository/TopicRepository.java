@@ -30,16 +30,16 @@ public class TopicRepository extends MessageRepository {
 	private static final String DELETE = "DELETE FROM "+ TABLE + " WHERE created_at < ?";
 	private static final String DELETE_CONSUMED = "DELETE FROM "+ TABLE + "_consumed WHERE created_at < ?";
 
-	public void set(Message message) {
+	public void set(String queue, String payload) {
 		int result = jdbcTemplate.update(INSERT, 
-				new Object[]{message.getQueue(), message.getPayload(), message.getCreatedAt()},
+				new Object[]{queue, payload, OffsetDateTime.now()},
 				new int[]{Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP});
 		if (result == 0) {
 			throw new RuntimeException();
 		}
 	}
 
-	public Optional<Message> get(String queue, String consumer) {
+	public Optional<String> get(String queue, String consumer) {
 		Message message = null;
 		TransactionStatus txStatus = transactionManager.getTransaction(getTransactionDefinition());
 		try {
@@ -49,7 +49,7 @@ public class TopicRepository extends MessageRepository {
 				jdbcTemplate.update(UPDATE, new Object[] {message.getId(), message.getCreatedAt(), consumer, OffsetDateTime.now()}, new int[] {Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR, Types.TIMESTAMP});
 			}
 			transactionManager.commit(txStatus);
-			return Optional.ofNullable(message);
+			return Optional.ofNullable(message == null ? null : message.getPayload());
 		} catch (Exception e) {
 			e.printStackTrace();
 			transactionManager.rollback(txStatus);

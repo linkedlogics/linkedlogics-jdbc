@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.jdbc.repository.TopicRepository;
+import dev.linkedlogics.service.TopicService;
 
 public class JdbcTopicService implements TopicService {
 	private String consumerId = UUID.randomUUID().toString();
@@ -36,10 +37,10 @@ public class JdbcTopicService implements TopicService {
 	}
 	
 	public void offer(String topic, String payload) {
-		repository.set(Message.builder().queue(topic).payload(payload).createdAt(OffsetDateTime.now()).build());
+		repository.set(topic, payload);
 	}
 	
-	public Optional<Message> poll(String topic) {
+	public Optional<String> poll(String topic) {
 		return repository.get(topic, consumerId);
 	}
 }

@@ -48,7 +48,7 @@ public class ContextRepository {
 						Types.INTEGER, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP,
 						Types.LONGVARCHAR});
 		if (result == 0) {
-			throw new RuntimeException();
+			throw new RuntimeException("optimistic lock failed");
 		}
 	}
 
@@ -61,7 +61,7 @@ public class ContextRepository {
 				new int[]{Types.VARCHAR, Types.INTEGER, Types.TIMESTAMP, Types.TIMESTAMP, Types.TIMESTAMP,
 						Types.LONGVARCHAR, Types.VARCHAR, Types.INTEGER,});
 		if (result == 0) {
-			throw new RuntimeException();
+			throw new RuntimeException("optimistic lock failed");
 		}
 	}
 

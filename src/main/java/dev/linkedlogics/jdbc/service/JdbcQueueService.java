@@ -1,11 +1,10 @@
 package dev.linkedlogics.jdbc.service;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import dev.linkedlogics.LinkedLogics;
-import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.jdbc.repository.QueueRepository;
+import dev.linkedlogics.service.QueueService;
 
 public class JdbcQueueService implements QueueService {
 	private QueueRepository repository;
@@ -15,10 +14,10 @@ public class JdbcQueueService implements QueueService {
 	}
 	
 	public void offer(String queue, String payload) {
-		repository.set(Message.builder().queue(queue).payload(payload).createdAt(OffsetDateTime.now()).build());
+		repository.set(queue, payload);
 	}
 	
-	public Optional<Message> poll(String queue) {
+	public Optional<String> poll(String queue) {
 		return repository.get(queue, LinkedLogics.getApplicationName());
 	}
 }

@@ -16,7 +16,6 @@ public class JdbcContextService implements ContextService {
 		repository = new ContextRepository();
 	}
 	
-	
 	@Override
 	public Optional<Context> get(String id) {
 		try {

@@ -8,6 +8,7 @@ import dev.linkedlogics.LinkedLogics;
 import dev.linkedlogics.context.Context;
 import dev.linkedlogics.jdbc.entity.Message;
 import dev.linkedlogics.service.ConsumerService;
+import dev.linkedlogics.service.QueueService;
 import dev.linkedlogics.service.ServiceLocator;
 import dev.linkedlogics.service.task.ProcessorTask;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +39,12 @@ public class JdbcConsumerService implements ConsumerService, Runnable {
 		while (isRunning) {
 			try {
 				QueueService queueService = ServiceLocator.getInstance().getService(QueueService.class);
-				Optional<Message> message = queueService.poll(LinkedLogics.getApplicationName());
+				Optional<String> message = queueService.poll(LinkedLogics.getApplicationName());
 				
 				if (message.isPresent()) {
 					ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
 					try {
-						consume(mapper.readValue(message.get().getPayload(), Context.class));
+						consume(mapper.readValue(message.get(), Context.class));
 					} catch (Exception e) {
 						log.error(e.getLocalizedMessage(), e);
 					}
