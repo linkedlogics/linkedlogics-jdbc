@@ -39,6 +39,7 @@ public class RetryProcess1Tests {
 		LinkedLogics.configure(new JdbcServiceConfigurer());
 		LinkedLogics.registerLogic(RetryProcess1Tests.class);
 		LinkedLogics.registerProcess(RetryProcess1Tests.class);
+		LinkedLogics.launch();
 		contextService = ServiceLocator.getInstance().getContextService();
 	}
 

@@ -19,6 +19,7 @@ public class TopicServiceTests {
 	@BeforeAll
 	public static void setUp() {
 		LinkedLogics.configure(new JdbcServiceConfigurer());
+		LinkedLogics.launch();
 	}
 	
 	@Test

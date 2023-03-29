@@ -29,6 +29,7 @@ public class SimpleProcess1Tests {
 		LinkedLogics.configure(new JdbcServiceConfigurer());
 		LinkedLogics.registerLogic(SimpleProcess1Tests.class);
 		LinkedLogics.registerProcess(SimpleProcess1Tests.class);
+		LinkedLogics.launch();
 	}
 
 	@Test
