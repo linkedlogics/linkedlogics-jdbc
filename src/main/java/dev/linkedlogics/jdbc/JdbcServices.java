@@ -12,7 +12,7 @@ import dev.linkedlogics.service.local.LocalConsumerService;
 import dev.linkedlogics.service.local.LocalPublisherService;
 import dev.linkedlogics.service.local.QueueSchedulerService;
 
-public class JdbcServices implements ServiceProvider {
+public class JdbcServices extends ServiceProvider {
 	@Override
 	public List<LinkedLogicsService> getMessagingServices() {
 		return List.of(new JdbcQueueService(), new JdbcTopicService(), new LocalConsumerService(), new LocalPublisherService());
