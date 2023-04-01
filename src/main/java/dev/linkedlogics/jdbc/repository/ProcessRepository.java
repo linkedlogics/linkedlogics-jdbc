@@ -38,7 +38,6 @@ public class ProcessRepository {
 	}
 
 	public void createProcess(ProcessEntity process) throws Exception {
-		System.out.println("CREATE " + process.getId());
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{process.getId(), process.getVersion(), OffsetDateTime.now(), OffsetDateTime.now(), process.getBuilder()},
 				new int[]{Types.VARCHAR, Types.INTEGER, Types.TIMESTAMP, Types.TIMESTAMP, Types.LONGVARCHAR});
@@ -48,7 +47,6 @@ public class ProcessRepository {
 	}
 	
 	public void update(ProcessEntity process) throws Exception {
-		System.out.println("UPDATE " + process.getId());
 		int result = jdbcTemplate.update(UPDATE, 
 				new Object[]{OffsetDateTime.now(), process.getBuilder(), process.getId(), process.getVersion()},
 				new int[]{Types.LONGVARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER});
@@ -67,7 +65,6 @@ public class ProcessRepository {
 					return new ProcessEntity(id, version, builder);
 				}
 			}, new Object[] {id, version});
-			System.out.println("GET " + process.getId());
 			return Optional.of(process);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
@@ -96,7 +93,6 @@ public class ProcessRepository {
 	public Optional<Integer> getMaxVersion(String id) throws Exception {
 		try {
 			Integer maxVersion = jdbcTemplate.queryForObject(VERSION, Integer.class, new Object[] {id});
-			System.out.println("MAX " + id);
 			return Optional.of(maxVersion);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
