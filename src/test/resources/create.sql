@@ -49,3 +49,12 @@ CREATE TABLE ll_trigger (
     expired_at TIMESTAMP,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE ll_process (
+    id VARCHAR(128) NOT NULL,
+    version INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
+    builder VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);

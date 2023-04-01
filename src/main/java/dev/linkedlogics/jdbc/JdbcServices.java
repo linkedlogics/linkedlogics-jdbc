@@ -3,6 +3,7 @@ package dev.linkedlogics.jdbc;
 import java.util.List;
 
 import dev.linkedlogics.jdbc.service.JdbcContextService;
+import dev.linkedlogics.jdbc.service.JdbcProcessService;
 import dev.linkedlogics.jdbc.service.JdbcQueueService;
 import dev.linkedlogics.jdbc.service.JdbcTopicService;
 import dev.linkedlogics.jdbc.service.JdbcTriggerService;
@@ -25,6 +26,6 @@ public class JdbcServices extends ServiceProvider {
 
 	@Override
 	public List<LinkedLogicsService> getStoringServices() {
-		return List.of(new JdbcContextService(), new JdbcTriggerService());
+		return List.of(new JdbcContextService(), new JdbcTriggerService(), new JdbcProcessService());
 	}
 }
