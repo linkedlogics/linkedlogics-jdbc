@@ -1,7 +1,7 @@
 package dev.linkedlogics.jdbc.service;
 
 import dev.linkedlogics.service.ServiceConfigurer;
-import dev.linkedlogics.service.local.QueueSchedulerService;
+import dev.linkedlogics.service.common.QueueSchedulerService;
 
 public class JdbcServiceConfigurer extends ServiceConfigurer {
 	public JdbcServiceConfigurer() {

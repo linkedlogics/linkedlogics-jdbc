@@ -9,9 +9,9 @@ import dev.linkedlogics.jdbc.service.JdbcTopicService;
 import dev.linkedlogics.jdbc.service.JdbcTriggerService;
 import dev.linkedlogics.service.LinkedLogicsService;
 import dev.linkedlogics.service.ServiceProvider;
+import dev.linkedlogics.service.common.QueueSchedulerService;
 import dev.linkedlogics.service.local.LocalConsumerService;
 import dev.linkedlogics.service.local.LocalPublisherService;
-import dev.linkedlogics.service.local.QueueSchedulerService;
 
 public class JdbcServices extends ServiceProvider {
 	@Override
