@@ -19,6 +19,7 @@ import io.linkedlogics.LinkedLogicsCallback;
 import io.linkedlogics.annotation.Input;
 import io.linkedlogics.annotation.Logic;
 import io.linkedlogics.context.Context;
+import io.linkedlogics.context.ContextBuilder;
 import io.linkedlogics.context.ContextError;
 import io.linkedlogics.context.Status;
 import io.linkedlogics.model.ProcessDefinition;
@@ -37,7 +38,7 @@ public class CallBack1Tests {
 	@Test
 	public void testScenario1() {
 		AtomicBoolean result = new AtomicBoolean();
-		String contextId = LinkedLogics.start("CALLBACK_SCENARIO_1", new HashMap<>() {{ put("s", "hello");}},
+		String contextId = LinkedLogics.start(ContextBuilder.process("CALLBACK_SCENARIO_1").params("s", "hello").build(),
 				new LinkedLogicsCallback() {
 					
 					@Override
@@ -73,7 +74,7 @@ public class CallBack1Tests {
 	@Test
 	public void testScenario2() {
 		AtomicBoolean result = new AtomicBoolean();
-		String contextId = LinkedLogics.start("CALLBACK_SCENARIO_2", new HashMap<>() {{ put("s", "hello");}},
+		String contextId = LinkedLogics.start(ContextBuilder.process("CALLBACK_SCENARIO_2").params("s", "hello").build(),
 				new LinkedLogicsCallback() {
 					
 					@Override

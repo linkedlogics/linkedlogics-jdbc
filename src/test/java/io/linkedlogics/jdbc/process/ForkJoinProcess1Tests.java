@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import io.linkedlogics.LinkedLogics;
 import io.linkedlogics.annotation.Input;
 import io.linkedlogics.annotation.Logic;
+import io.linkedlogics.context.ContextBuilder;
 import io.linkedlogics.context.Status;
 import io.linkedlogics.model.ProcessDefinition;
 import io.linkedlogics.service.ContextService;
@@ -38,7 +39,7 @@ public class ForkJoinProcess1Tests {
 	@Test
 	public void testScenario1() {
 		long start = System.currentTimeMillis();
-		String contextId = LinkedLogics.start("FORKJOIN_SCENARIO_1", new HashMap<>());
+		String contextId = LinkedLogics.start(ContextBuilder.process("FORKJOIN_SCENARIO_1").build());
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
 		long finish = System.currentTimeMillis();
 
@@ -72,7 +73,7 @@ public class ForkJoinProcess1Tests {
 	@Test
 	public void testScenario2() {
 		long start = System.currentTimeMillis();
-		String contextId = LinkedLogics.start("FORKJOIN_SCENARIO_2", new HashMap<>());
+		String contextId = LinkedLogics.start(ContextBuilder.process("FORKJOIN_SCENARIO_2").build());
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
 		long finish = System.currentTimeMillis();
 
@@ -111,7 +112,7 @@ public class ForkJoinProcess1Tests {
 	@Test
 	public void testScenario3() {
 		long start = System.currentTimeMillis();
-		String contextId = LinkedLogics.start("FORKJOIN_SCENARIO_3", new HashMap<>());
+		String contextId = LinkedLogics.start(ContextBuilder.process("FORKJOIN_SCENARIO_3").build());
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
 		long finish = System.currentTimeMillis();
 
