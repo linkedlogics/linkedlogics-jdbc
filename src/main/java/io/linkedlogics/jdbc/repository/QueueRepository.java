@@ -5,6 +5,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
 import org.springframework.transaction.TransactionStatus;
 
 import io.linkedlogics.jdbc.entity.Message;
@@ -20,6 +22,10 @@ public class QueueRepository extends MessageRepository {
 	private static final String SELECT = "SELECT id, queue, payload, created_at, consumed_by FROM " + TABLE + " WHERE queue = ? AND consumed_by = ? LIMIT 1";
 	private static final String DELETE = "DELETE FROM " + TABLE + " WHERE id = ?"; 
 
+	public QueueRepository(DataSource dataSource) {
+		super(dataSource);
+	}
+	
 	public void set(String queue, String payload) {
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{queue, payload, OffsetDateTime.now()},

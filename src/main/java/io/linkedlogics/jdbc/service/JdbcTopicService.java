@@ -33,7 +33,7 @@ public class JdbcTopicService implements TopicService {
 	}
 
 	public JdbcTopicService() {
-		this.repository = new TopicRepository();
+		this.repository = new TopicRepository(new JdbcConnectionService().getDataSource());
 	}
 	
 	public void offer(String topic, String payload) {

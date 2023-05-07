@@ -13,7 +13,7 @@ public class JdbcContextService implements ContextService {
 	private ContextRepository repository;
 	
 	public JdbcContextService() {
-		repository = new ContextRepository();
+		repository = new ContextRepository(new JdbcConnectionService().getDataSource());
 	}
 	
 	@Override

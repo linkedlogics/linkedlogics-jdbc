@@ -9,12 +9,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.sql.DataSource;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import io.linkedlogics.jdbc.service.JdbcDataSource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -32,9 +33,9 @@ public class ProcessRepository {
 	protected DataSourceTransactionManager transactionManager;
 	protected JdbcTemplate jdbcTemplate;
 
-	public ProcessRepository() {
-		this.jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
-		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
+	public ProcessRepository(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.transactionManager = new DataSourceTransactionManager(dataSource);
 	}
 
 	public void createProcess(ProcessEntity process) throws Exception {

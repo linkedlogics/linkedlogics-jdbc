@@ -5,18 +5,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.linkedlogics.context.Context;
 import io.linkedlogics.service.ServiceLocator;
-import io.linkedlogics.jdbc.service.JdbcDataSource;
 
 public class ContextRepository {
 	public static final String TABLE = "ll_context";
@@ -32,9 +31,9 @@ public class ContextRepository {
 	protected DataSourceTransactionManager transactionManager;
 	protected JdbcTemplate jdbcTemplate;
 
-	public ContextRepository() {
-		this.jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
-		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
+	public ContextRepository(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.transactionManager = new DataSourceTransactionManager(dataSource);
 	}
 
 	public void create(Context context) throws Exception {

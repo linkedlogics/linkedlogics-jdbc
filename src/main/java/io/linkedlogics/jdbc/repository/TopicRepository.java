@@ -1,23 +1,15 @@
 package io.linkedlogics.jdbc.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
+import javax.sql.DataSource;
+
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import io.linkedlogics.jdbc.entity.Message;
-import io.linkedlogics.jdbc.service.JdbcDataSource;
 
 public class TopicRepository extends MessageRepository {
 	private static final String TABLE = "ll_topic";
@@ -30,6 +22,10 @@ public class TopicRepository extends MessageRepository {
 	private static final String DELETE = "DELETE FROM "+ TABLE + " WHERE created_at < ?";
 	private static final String DELETE_CONSUMED = "DELETE FROM "+ TABLE + "_consumed WHERE created_at < ?";
 
+	public TopicRepository(DataSource dataSource) {
+		super(dataSource);
+	}
+	
 	public void set(String queue, String payload) {
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{queue, payload, OffsetDateTime.now()},

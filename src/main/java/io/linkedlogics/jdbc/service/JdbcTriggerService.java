@@ -9,7 +9,7 @@ public class JdbcTriggerService implements TriggerService {
 	private TriggerRepository repository;
 	
 	public JdbcTriggerService() {
-		repository = new TriggerRepository();
+		repository = new TriggerRepository(new JdbcConnectionService().getDataSource());
 	}
 	
 	@Override

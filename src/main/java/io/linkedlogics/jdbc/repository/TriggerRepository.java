@@ -7,6 +7,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -15,7 +17,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import io.linkedlogics.service.TriggerService.Trigger;
-import io.linkedlogics.jdbc.service.JdbcDataSource;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +34,9 @@ public class TriggerRepository {
 	protected DataSourceTransactionManager transactionManager;
 	protected JdbcTemplate jdbcTemplate;
 
-	public TriggerRepository() {
-		this.jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
-		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
+	public TriggerRepository(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.transactionManager = new DataSourceTransactionManager(dataSource);
 	}
 	
 	public void create(String contextId, Trigger trigger) {

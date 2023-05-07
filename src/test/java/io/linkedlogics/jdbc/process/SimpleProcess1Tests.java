@@ -48,7 +48,7 @@ public class SimpleProcess1Tests {
 					public void onSuccess(Context context) {
 						String s = (String) context.getParams().get("s");
 						result.set(s.equals("ZZZYYYXXXHELLO"));		
-						result.notifyAll();
+//						result.notifyAll();
 					}
 					
 					@Override
@@ -57,9 +57,9 @@ public class SimpleProcess1Tests {
 					}
 				});
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
-		try {
-			result.wait();
-		} catch (InterruptedException e) {}
+//		try {
+//			result.wait();
+//		} catch (InterruptedException e) {}
 		assertThat(result.get()).isTrue();
 	}
 	

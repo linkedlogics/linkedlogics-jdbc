@@ -50,7 +50,6 @@ public class CallBack1Tests {
 					public void onSuccess(Context context) {
  						String s = (String) context.getParams().get("s");
 						result.set(s.equals("HELLO"));	
-						result.notifyAll();
 					}
 					
 					@Override
@@ -59,9 +58,6 @@ public class CallBack1Tests {
 					}
 				});
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
-		try {
-			result.wait();
-		} catch (InterruptedException e) {}
 		assertThat(result.get()).isTrue();
 	}
 
@@ -90,13 +86,9 @@ public class CallBack1Tests {
 					@Override
 					public void onFailure(Context context, ContextError error) {
 						result.set(true);
-						result.notifyAll();
 					}
 				});
 		assertThat(waitUntil(contextId, Status.FAILED)).isTrue();
-		try {
-			result.wait();
-		} catch (InterruptedException e) {}
 		assertThat(result.get()).isTrue();
 	}
 

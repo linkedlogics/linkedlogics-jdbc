@@ -2,11 +2,12 @@ package io.linkedlogics.jdbc.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
+
+import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,15 +16,14 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import io.linkedlogics.jdbc.entity.Message;
-import io.linkedlogics.jdbc.service.JdbcDataSource;
 
 public abstract class MessageRepository {
 	protected DataSourceTransactionManager transactionManager;
 	protected JdbcTemplate jdbcTemplate;
 	
-	public MessageRepository() {
-		this.jdbcTemplate = new JdbcTemplate(JdbcDataSource.getDataSource());
-		this.transactionManager = new DataSourceTransactionManager(JdbcDataSource.getDataSource());
+	public MessageRepository(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		this.transactionManager = new DataSourceTransactionManager(dataSource);
 	}
 	
 	public abstract void set(String queue, String payload);

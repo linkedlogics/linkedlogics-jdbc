@@ -10,7 +10,7 @@ public class JdbcQueueService implements QueueService {
 	private QueueRepository repository;
 	
 	public JdbcQueueService() {
-		this.repository = new QueueRepository();
+		this.repository = new QueueRepository(new JdbcConnectionService().getDataSource());
 	}
 	
 	public void offer(String queue, String payload) {
