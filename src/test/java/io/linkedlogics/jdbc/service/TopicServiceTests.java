@@ -36,7 +36,7 @@ public class TopicServiceTests {
 		message = topicService.poll(TOPIC);
 		assertThat(message).isEmpty();
 		
-		TopicRepository repository = new TopicRepository();
+		TopicRepository repository = new TopicRepository(new JdbcConnectionService().getDataSource());
 		message = repository.get(TOPIC, "other_consumer_id");
 		assertThat(message).isPresent();
 	}
