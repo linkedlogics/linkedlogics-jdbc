@@ -1,21 +1,16 @@
 package io.linkedlogics.jdbc.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import io.linkedlogics.LinkedLogics;
-import io.linkedlogics.jdbc.process.JdbcProcess1Tests;
 import io.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.test.LinkedLogicsExtension;
+import io.linkedlogics.test.LinkedLogicsRegister;
 
 
+@ExtendWith(LinkedLogicsExtension.class)
+@LinkedLogicsRegister(serviceConfigurerClasses = JdbcServiceConfigurer.class)
 public class ProcessServiceTests {
-	@BeforeAll
-	public static void setUp() {
-		LinkedLogics.configure(new JdbcServiceConfigurer());
-		LinkedLogics.registerLogic(JdbcProcess1Tests.class);
-		LinkedLogics.registerProcess(JdbcProcess1Tests.class);
-		LinkedLogics.launch();
-	}
 	
 	@Test
 	public void shouldRefreshProcesses() {

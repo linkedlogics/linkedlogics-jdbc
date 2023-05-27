@@ -4,24 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import io.linkedlogics.LinkedLogics;
+import io.linkedlogics.jdbc.repository.TopicRepository;
 import io.linkedlogics.service.ServiceLocator;
 import io.linkedlogics.service.TopicService;
-import io.linkedlogics.jdbc.entity.Message;
-import io.linkedlogics.jdbc.repository.TopicRepository;
-import io.linkedlogics.jdbc.service.JdbcServiceConfigurer;
+import io.linkedlogics.test.LinkedLogicsExtension;
+import io.linkedlogics.test.LinkedLogicsRegister;
 
+@ExtendWith(LinkedLogicsExtension.class)
+@LinkedLogicsRegister(serviceConfigurerClasses = JdbcServiceConfigurer.class)
 public class TopicServiceTests {
 	private static final String TOPIC = "t1";
-	
-	@BeforeAll
-	public static void setUp() {
-		LinkedLogics.configure(new JdbcServiceConfigurer());
-		LinkedLogics.launch();
-	}
 	
 	@Test
 	public void shouldOfferAndConsume() {
