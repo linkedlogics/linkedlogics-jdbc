@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import io.linkedlogics.LinkedLogics;
 import io.linkedlogics.service.QueueService;
 import io.linkedlogics.service.ServiceLocator;
-import io.linkedlogics.jdbc.entity.Message;
-import io.linkedlogics.jdbc.service.JdbcServiceConfigurer;
 
 public class QueueServiceTests {
 	private static final String QUEUE = "q1";

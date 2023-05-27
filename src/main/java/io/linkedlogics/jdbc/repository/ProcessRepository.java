@@ -49,7 +49,7 @@ public class ProcessRepository {
 	
 	public void update(ProcessEntity process) throws Exception {
 		int result = jdbcTemplate.update(UPDATE, 
-				new Object[]{OffsetDateTime.now(), process.getBuilder(), process.getId(), process.getVersion()},
+				new Object[]{process.getBuilder(), OffsetDateTime.now(), process.getId(), process.getVersion()},
 				new int[]{Types.LONGVARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER});
 		if (result == 0) {
 			throw new RuntimeException("optimistic lock failed");

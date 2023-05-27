@@ -38,7 +38,6 @@ public class ContextRepository {
 
 	public void create(Context context) throws Exception {
 		ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
-
 		int result = jdbcTemplate.update(INSERT, 
 				new Object[]{context.getId(), context.getKey(), context.getParentId(), context.getStatus().name(), context.getVersion(), context.getProcessId(),
 						context.getProcessVersion(), context.getCreatedAt(), context.getUpdatedAt(), context.getFinishedAt(), context.getExpiresAt(),
@@ -53,7 +52,6 @@ public class ContextRepository {
 
 	public void update(Context context) throws Exception {
 		ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
-		
 		int result = jdbcTemplate.update(UPDATE, 
 				new Object[]{context.getStatus().name(), context.getVersion() + 1, context.getUpdatedAt(), context.getFinishedAt(), context.getExpiresAt(),
 						mapper.writeValueAsString(context), context.getId(), context.getVersion()},

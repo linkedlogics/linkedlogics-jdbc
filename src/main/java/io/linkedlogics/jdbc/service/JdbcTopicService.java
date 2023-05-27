@@ -7,9 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import io.linkedlogics.service.TopicService;
-import io.linkedlogics.jdbc.entity.Message;
 import io.linkedlogics.jdbc.repository.TopicRepository;
+import io.linkedlogics.service.TopicService;
 
 public class JdbcTopicService implements TopicService {
 	private String consumerId = UUID.randomUUID().toString();
@@ -29,7 +28,9 @@ public class JdbcTopicService implements TopicService {
 
 	@Override
 	public void stop() {
-		executor.shutdownNow();
+		if (executor != null) { 
+			executor.shutdownNow();
+		}
 	}
 
 	public JdbcTopicService() {
