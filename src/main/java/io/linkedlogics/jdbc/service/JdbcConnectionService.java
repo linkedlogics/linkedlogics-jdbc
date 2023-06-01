@@ -9,15 +9,12 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import io.linkedlogics.jdbc.service.config.JdbcConnectionServiceConfig;
-import io.linkedlogics.service.ConfigurableService;
 import io.linkedlogics.service.LinkedLogicsService;
+import io.linkedlogics.service.config.ServiceConfiguration;
 
-public class JdbcConnectionService extends ConfigurableService<JdbcConnectionServiceConfig> implements LinkedLogicsService {
+public class JdbcConnectionService implements LinkedLogicsService {
 	private static HikariDataSource dataSource;
-
-	public JdbcConnectionService() {
-		super(JdbcConnectionServiceConfig.class);
-	}
+	private JdbcConnectionServiceConfig config = new ServiceConfiguration().getConfig(JdbcConnectionServiceConfig.class);
 
 	public DataSource getDataSource() {
 		if (dataSource != null) {
@@ -39,20 +36,20 @@ public class JdbcConnectionService extends ConfigurableService<JdbcConnectionSer
 	}
 
 	protected HikariDataSource initDataSource() {
-		HikariConfig config = new HikariConfig();
+		HikariConfig poolConfig = new HikariConfig();
 
-		config.setJdbcUrl(getConfig().getUrl());
-		config.setUsername(getConfig().getUsername());
-		config.setPassword(getConfig().getPassword());
+		poolConfig.setJdbcUrl(config.getUrl());
+		poolConfig.setUsername(config.getUsername());
+		poolConfig.setPassword(config.getPassword());
 
-		getConfig().getPoolMin().ifPresent(config::setMinimumIdle);
-		getConfig().getPoolMax().ifPresent(config::setMaximumPoolSize);
+		config.getPoolMin().ifPresent(poolConfig::setMinimumIdle);
+		config.getPoolMax().ifPresent(poolConfig::setMaximumPoolSize);
 
-		config.addDataSourceProperty("cachePrepStmts" , "true");
-		config.addDataSourceProperty("prepStmtCacheSize" , "250");
-		config.addDataSourceProperty("prepStmtCacheSqlLimit" , "2048");
-		config.setDriverClassName(getConfig().getDriver());
-		return new HikariDataSource(config);
+		poolConfig.addDataSourceProperty("cachePrepStmts" , "true");
+		poolConfig.addDataSourceProperty("prepStmtCacheSize" , "250");
+		poolConfig.addDataSourceProperty("prepStmtCacheSqlLimit" , "2048");
+		poolConfig.setDriverClassName(config.getDriver());
+		return new HikariDataSource(poolConfig);
 	}
 
 }

@@ -16,32 +16,31 @@ import io.linkedlogics.model.ProcessDefinition;
 import io.linkedlogics.model.ProcessDefinitionReader;
 import io.linkedlogics.model.ProcessDefinitionWriter;
 import io.linkedlogics.model.process.helper.LogicDependencies;
-import io.linkedlogics.service.ConfigurableService;
 import io.linkedlogics.service.ProcessService;
-import io.linkedlogics.service.local.LocalProcessService;
+import io.linkedlogics.service.config.ServiceConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class JdbcProcessService extends ConfigurableService<JdbcProcessServiceConfig> implements ProcessService {
+public class JdbcProcessService implements ProcessService {
 	protected Map<String, ProcessDefinition> definitions = new ConcurrentHashMap<>();
 	private ScheduledExecutorService service;
 	private ProcessRepository repository;
+	private JdbcProcessServiceConfig config = new ServiceConfiguration().getConfig(JdbcProcessServiceConfig.class);
 
 	public JdbcProcessService() {
-		super(JdbcProcessServiceConfig.class);
 		this.repository = new ProcessRepository(new JdbcConnectionService().getDataSource());
 	}
 
 	@Override
 	public void start() {
-		if (getConfig().getRefreshEnabled(true)) {
+		if (config.getRefreshEnabled(true)) {
 			service = Executors.newSingleThreadScheduledExecutor();
 			service.scheduleAtFixedRate(new Runnable() {
 				@Override
 				public void run() {
 					refreshProcesses();
 				}
-			}, getConfig().getRefreshInterval().get(), getConfig().getRefreshInterval().get(), TimeUnit.SECONDS);
+			}, config.getRefreshInterval().get(), config.getRefreshInterval().get(), TimeUnit.SECONDS);
 		}
 	}
 
