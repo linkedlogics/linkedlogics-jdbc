@@ -35,7 +35,7 @@ public class JdbcProcess1Tests {
 	@Test
 	public void testScenario1() {
 		long start = System.currentTimeMillis();
-		String contextId = LinkedLogics.start(ContextBuilder.process("SIMPLE_SCENARIO_1").build());
+		String contextId = LinkedLogics.start(ContextBuilder.newContext("SIMPLE_SCENARIO_1").build());
 
 		JdbcTestContextService.blockUntil();
 		long finish = System.currentTimeMillis();
@@ -76,7 +76,7 @@ public class JdbcProcess1Tests {
 	@Test
 	public void testScenario2() {
 		long start = System.currentTimeMillis();
-		String contextId = LinkedLogics.start(ContextBuilder.process("SIMPLE_SCENARIO_2").params("list", new ArrayList<>()).build());
+		String contextId = LinkedLogics.start(ContextBuilder.newContext("SIMPLE_SCENARIO_2").params("list", new ArrayList<>()).build());
 		JdbcTestContextService.blockUntil();
 		long finish = System.currentTimeMillis();
 		
