@@ -3,6 +3,7 @@ package io.linkedlogics.jdbc;
 import java.util.List;
 
 import io.linkedlogics.jdbc.service.JdbcContextService;
+import io.linkedlogics.jdbc.service.JdbcLimitService;
 import io.linkedlogics.jdbc.service.JdbcProcessService;
 import io.linkedlogics.jdbc.service.JdbcQueueService;
 import io.linkedlogics.jdbc.service.JdbcTopicService;
@@ -32,8 +33,6 @@ public class JdbcServices extends ServiceProvider {
 
 	@Override
 	public List<LinkedLogicsService> getProcessingServices() {
-		return List.of(new QueueCallbackService());
+		return List.of(new QueueCallbackService(), new JdbcLimitService());
 	}
-	
-	
 }

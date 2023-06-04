@@ -58,3 +58,10 @@ CREATE TABLE ll_process (
     builder VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE ll_limit (
+    id VARCHAR(128) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    counter INTEGER NOT NULL,
+    PRIMARY KEY (id)
+);

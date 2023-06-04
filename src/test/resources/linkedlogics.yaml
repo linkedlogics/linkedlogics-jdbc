@@ -13,3 +13,6 @@ linkedlogics:
     process:
       refresh:
         enabled: false    
+    limit:
+      cleanup:
+        interval: 300
