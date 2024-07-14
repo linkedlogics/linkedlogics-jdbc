@@ -13,12 +13,12 @@ public class JdbcTriggerService implements TriggerService {
 	}
 	
 	@Override
-	public List<Trigger> get(String contextİd) {
-		return repository.get(contextİd);
+	public List<Trigger> get(String context) {
+		return repository.get(context);
 	}
 
 	@Override
-	public void set(String contextİd, Trigger trigger) {
-		repository.create(contextİd, trigger);
+	public void set(String context, Trigger trigger) {
+		repository.create(context, trigger);
 	}
 }
